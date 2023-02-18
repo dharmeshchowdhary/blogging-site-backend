@@ -5,8 +5,6 @@ import com.driver.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ImageService {
 
@@ -16,16 +14,11 @@ public class ImageService {
     ImageRepository imageRepository2;
 
     public Image addImage(Integer blogId, String description, String dimensions) {
-        //add an image to the blog
-//        if(!blogRepository2.findById(blogId).isPresent()) {
-//            throw new Exception();
-//        }
         Blog blog = blogRepository2.findById(blogId).get();
         Image image = new Image(blog,description,dimensions);
         blog.getImageList().add(image);
         blogRepository2.save(blog);
         return image;
-        //Here I am not explicitly adding image in image-repository because due to cascading effect
     }
 
     public void deleteImage(Integer id){
@@ -33,29 +26,25 @@ public class ImageService {
     }
 
     public int countImagesInScreen(Integer id, String screenDimensions) {
-        //Find the number of images of given dimensions that can fit in a screen having `screenDimensions`
-        String [] scrarray = screenDimensions.split("X"); //A=Length   X    B=Breadth
-//        if(!imageRepository2.findById(id).isPresent()){
-//            throw new Exception();
-//        }
+        String [] scrarray = screenDimensions.split("X");
         Image image = imageRepository2.findById(id).get();
 
         String imageDimensions = image.getDimensions();
         String [] imgarray = imageDimensions.split("X");
 
-        int scrl = Integer.parseInt(scrarray[0]); //A -- > integer
-        int scrb = Integer.parseInt(scrarray[1]); //B -- > integer
+        int scrL = Integer.parseInt(scrarray[0]);
+        int scrB = Integer.parseInt(scrarray[1]);
 
-        int imgl = Integer.parseInt(imgarray[0]); //A -- > integer
-        int imgb = Integer.parseInt(imgarray[1]); //B -- > integer
+        int imgL = Integer.parseInt(imgarray[0]);
+        int imgB = Integer.parseInt(imgarray[1]);
 
-        return no_Images(scrl,scrb,imgl,imgb);
+        return no_Images(scrL,scrB,imgL,imgB);
 
     }
 
-    private int no_Images(int scrl, int scrb, int imgl, int imgb) {
-        int lenC = scrl/imgl; //
-        int lenB = scrb/imgb;
-        return lenC*lenB;
+    private int no_Images(int scrL, int scrB, int imgL, int imgB) {
+        int lenC = scrL / imgL; //
+        int lenB = scrB / imgB;
+        return lenC * lenB;
     }
 }
