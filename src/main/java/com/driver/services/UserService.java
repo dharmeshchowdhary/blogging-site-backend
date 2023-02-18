@@ -8,25 +8,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository3;
+    UserRepository userRepository;
 
-    @Autowired
-    BlogService blogService3;
-
-    public void createUser(User user){
-        userRepository3.save(user);
-
+    public User createUser(String username, String password){
+        User user = new User(username, password);
+        userRepository.save(user);
+        return user;
     }
 
     public void deleteUser(int userId){
-        userRepository3.deleteById(userId);
+        userRepository.deleteById(userId);
     }
 
-    public void updateUser(User user){
-        userRepository3.save(user);
-    }
-
-    public User findUserByUsername(String username){
-        return userRepository3.findByUsername(username);
+    public User updateUser(Integer id, String password)  {
+        User user;
+//        if(!userRepository3.findById(id).isPresent()) {
+//           throw new Exception();
+//        }
+        user = userRepository.findById(id).get();
+        user.setPassword(password);
+        userRepository.save(user);
+        return user;
     }
 }
