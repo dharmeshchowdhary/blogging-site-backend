@@ -36,4 +36,9 @@ public class BlogService {
         //delete blog and corresponding images
         blogRepository.deleteById(blogId);
     }
+
+    public Blog searchBlog(String subject) {
+//        return BlogRepository.searchBlog(subject);
+        return (Blog) blogRepository.findAll();
+    }
 }

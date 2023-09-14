@@ -1,4 +1,4 @@
-package com.driver.controller;
+    package com.driver.controller;
 
 import com.driver.models.Blog;
 import com.driver.services.BlogService;
@@ -27,4 +27,11 @@ public class BlogController {
         blogService.deleteBlog(blogId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/search/{subject}")
+    public ResponseEntity<Blog> searchBlog(@PathVariable String subject) {
+        Blog blog = blogService.searchBlog(subject);
+        return new ResponseEntity<>(blog, HttpStatus.OK);
+    }
+
 }

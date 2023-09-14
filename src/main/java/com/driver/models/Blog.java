@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+
 @Entity
 @Table(name = "Blog")
 public class Blog{
@@ -15,6 +16,18 @@ public class Blog{
     private int id;
     private String title;
     private String content;
+    private String subject;
+
+    public Blog(User user, String title, String content) {
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
     @CreationTimestamp
     private Date pubDate;
@@ -32,16 +45,11 @@ public class Blog{
 
     }
 
-    public Blog(User user, String title, String content) {
-        this.title = title;
-        this.content = content;
-        this.user = user;
-    }
-
-    public Blog(int id, String title, String content, Date pubDate, User user, List<Image> imageList) {
+    public Blog(int id, String title, String content, String subject, Date pubDate, User user, List<Image> imageList) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.subject = subject;
         this.pubDate = pubDate;
         this.user = user;
         this.imageList = imageList;
